@@ -1,0 +1,49 @@
+<div>
+
+  <form [formGroup]= "formCadastro" (submit)= "salvar(formCadastro.value)">
+    <fieldset>
+      <legend>Veículo</legend>
+
+      <div>
+        <label for="ano">Ano: *</label>
+        <input type="text" id="ano" formControlName="ano" 
+        [class.invalido]="formCadastro.controls.ano.invalid && formCadastro.controls.ano.touched"
+          [class.valido]="formCadastro.controls.ano.valid && formCadastro.controls.ano.touched" />
+      </div>
+      <div class="erro" *ngIf="formCadastro.controls.ano.invalid && formCadastro.controls.ano.touched">
+          <p *ngIf="formCadastro.controls.ano.errors.required">Campo Obrigatório</p>
+          <p *ngIf="formCadastro.controls.ano.errors.maxlength || formCadastro.controls.ano.errors.minlength">Tamanho de 4 caracteres</p>
+        </div>
+      <div>
+        <label for="placa">Placa: *</label>
+        <input type="text" id="placa" formControlName= "placa" (blur)= "verificaDuplicidade(formCadastro.value.placa)" 
+        [class.invalido]="formCadastro.controls.placa.invalid && formCadastro.controls.placa.touched"
+          [class.valido]="formCadastro.controls.placa.valid && formCadastro.controls.placa.touched" />
+      </div>
+      <div class="erro" *ngIf="formCadastro.controls.placa.invalid && formCadastro.controls.placa.touched">
+          <p *ngIf="formCadastro.controls.placa.errors.required">Campo Obrigatório</p>
+          <p *ngIf="formCadastro.controls.placa.errors.maxlength || formCadastro.controls.placa.errors.minlength">Tamanho de 7 caracteres</p>
+        </div>
+      <div>
+        <label for="modelo">Modelo: *</label><br/>
+        <select id="modelo" formControlName="idModelo" #i (change) ="getFabricante(i.value)"
+        [class.invalido]="formCadastro.controls.idModelo.invalid && formCadastro.controls.idModelo.touched"
+          [class.valido]="formCadastro.controls.idModelo.valid && formCadastro.controls.idModelo.touched">
+          <option value="">Selecione...</option>
+          <option *ngFor="let m of modelos" [value]= "m.id">{{m.nome}}</option>
+        </select>
+      </div>
+      
+      <div >
+        <label for="fabricante">Fabricante: *</label><br/>
+        <select id="fabricante" formControlName="idFabricante"
+        [class.invalido]="formCadastro.controls.idFabricante != '' && formCadastro.controls.idFabricante.touched"
+        [class.valido]="formCadastro.controls.idFabricante.valid && formCadastro.controls.idFabricante.touched">
+          <option value="">Selecione...</option>
+          <option *ngFor="let f of fabricantes" [value]="f.id">{{f.nome}}</option>
+        </select>
+      </div>
+    </fieldset>
+    <input type="submit" value="Salvar" [disabled]= "formCadastro.invalid">
+  </form>
+</div>

@@ -1,0 +1,20 @@
+<input type="button" value="Inserir" [routerLink]="['/veiculo/create']" />
+
+<table>
+  <thead>
+    <tr>
+      <th>Placa</th>
+      <th>Ano</th>
+      <th>Modelo</th>
+      <th>Fabricante</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let veiculo of veiculos | async">
+        <td>{{veiculo.placa}}</td>
+        <td>{{veiculo.ano}}</td>
+        <td>{{veiculo.nomeModelo}}</td>
+        <td>{{veiculo.nomeFabricante}}</td>
+    </tr>
+  </tbody>
+</table>
